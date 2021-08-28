@@ -1,68 +1,64 @@
-import { React, useState, createRef } from "react";
+import { React, useState, createRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addBookmark } from '../redux/reducers/bookmarkSlice';
 import { getFormattedURL } from '../helpers/faviconGrabber';
 // import Button from "@material-ui/core/Button";
 
-function LinkInput(props) {
-  const [inputName, setInputName] = useState("");
-  const [inputLink, setInputLink] = useState("");
+function LinkInput() {
+  const [inputName, setInputName] = useState('');
+  const [inputLink, setInputLink] = useState('');
   const dispatch = useDispatch();
   const inputRef = createRef();
 
   function handleNameInputChange(e) {
-    const value = e.target.value;
+    const { value } = e.target;
     setInputName(value);
   }
 
   function handleLinkInputChange(e) {
-    const value = e.target.value;
+    const { value } = e.target;
     setInputLink(value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!inputName || !inputLink) {
-      alert('Fill both the name and url of the site you want to bookmark');
+      // alert('Fill both the name and url of the site you want to bookmark');
+      setInputName('Please fill both parameters');
+      setInputLink('');
       inputRef.current.focus();
       return;
     }
     dispatch(addBookmark({
       name: inputName,
-      URL: getFormattedURL(inputLink)
+      URL: getFormattedURL(inputLink),
     }));
-    setInputName("");
-    setInputLink("");
+    setInputName('');
+    setInputLink('');
     inputRef.current.focus();
   }
 
-  // function clearSavedData(e) {
-  //   e.preventDefault();
-  //   props.clearSavedData();
-  // }
-
-  return(
+  return (
     <div className="link-input-container">
       <form onSubmit={handleSubmit}>
-        <input 
+        <input
           className="link-input"
-          type='text'
+          type="text"
           value={inputName}
           onChange={handleNameInputChange}
           ref={inputRef}
-          autoFocus
-          placeholder='Name'
+          placeholder="Name"
         />
-        <br/>
-        <input 
+        <br />
+        <input
           className="link-input"
-          type='text'
+          type="text"
           value={inputLink}
           onChange={handleLinkInputChange}
-          placeholder='URL'
+          placeholder="URL"
         />
-        <br/>
-        <input type='submit' value='submit' />
+        <br />
+        <input type="submit" value="submit" />
         {/* <input type='submit' value='clear' onClick={clearSavedData} /> */}
       </form>
     </div>

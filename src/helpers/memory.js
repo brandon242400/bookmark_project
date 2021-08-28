@@ -1,18 +1,18 @@
-const ListName = 'Bookmark-List-000'
+const ListName = 'Bookmark-List-000';
 
 class Memory {
-  updateList(newList) {
+  static updateList(newList) {
     localStorage.setItem(ListName, JSON.stringify(newList));
   }
 
-  getList() {
+  static getList() {
     if (JSON.parse(localStorage.getItem(ListName)) === null) {
       return {};
     }
     return JSON.parse(localStorage.getItem(ListName));
   }
 
-  clearAllStorage() {
+  static clearAllStorage() {
     localStorage.removeItem(ListName);
   }
 }
