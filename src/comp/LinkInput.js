@@ -2,7 +2,6 @@ import { React, useState, createRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addBookmark } from '../redux/reducers/bookmarkSlice';
 import { getFormattedURL } from '../helpers/faviconGrabber';
-// import Button from "@material-ui/core/Button";
 
 function LinkInput() {
   const [inputName, setInputName] = useState('');
@@ -23,16 +22,13 @@ function LinkInput() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!inputName || !inputLink) {
-      // alert('Fill both the name and url of the site you want to bookmark');
       setInputName('Please fill both parameters');
       setInputLink('');
       inputRef.current.focus();
       return;
     }
-    dispatch(addBookmark({
-      name: inputName,
-      URL: getFormattedURL(inputLink),
-    }));
+    console.log(getFormattedURL(inputLink));
+    dispatch(addBookmark(inputName, getFormattedURL(inputLink)));
     setInputName('');
     setInputLink('');
     inputRef.current.focus();
@@ -59,7 +55,6 @@ function LinkInput() {
         />
         <br />
         <input type="submit" value="submit" />
-        {/* <input type='submit' value='clear' onClick={clearSavedData} /> */}
       </form>
     </div>
   );

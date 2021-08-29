@@ -7,12 +7,12 @@ import { removeBookmark } from '../redux/reducers/bookmarkSlice';
 
 function LinkComponent(props) {
   const [loadImage, setLoadImage] = React.useState(true);
-  const { linkName, linkURL } = props;
+  const { linkName, linkURL, linkID } = props;
   const dispatch = useDispatch();
 
   function handleDeleteClick(e) {
     e.preventDefault();
-    dispatch(removeBookmark({ name: props.linkName, URL: props.linkURL }));
+    dispatch(removeBookmark(linkID));
   }
 
   let faviconImage = null;
@@ -20,11 +20,7 @@ function LinkComponent(props) {
   if (loadImage) {
     faviconImage = (
       <img
-        onError={() => {
-          // eslint-disable-next-line no-console
-          console.log(`Error: ${linkURL}`);
-          setLoadImage(false);
-        }}
+        onError={() => { setLoadImage(false); }}
         src={getFaviconURL(props.linkURL)}
         alt="nothing"
       />
@@ -60,6 +56,7 @@ function LinkComponent(props) {
 LinkComponent.propTypes = {
   linkName: PropTypes.string.isRequired,
   linkURL: PropTypes.string.isRequired,
+  linkID: PropTypes.string.isRequired,
 };
 
 export default LinkComponent;

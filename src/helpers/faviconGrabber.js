@@ -11,7 +11,6 @@ const getFaviconURL = (link) => {
   }
 
   try {
-    // const firstPeriod = link.indexOf('.');
     const lastPeriod = link.lastIndexOf('.');
     const endOfLink = link.indexOf('/', lastPeriod);
     if (endOfLink !== -1) {
@@ -19,14 +18,21 @@ const getFaviconURL = (link) => {
     }
     return `${newLink}/favicon.ico`;
   } catch (e) {
-    return false;
+    return '';
   }
 };
 
+/** Formats some incomplete URLs. i.e. google.com ---> https://www.google.com */
 const getFormattedURL = (link) => {
   let newLink = link;
-  newLink = getFaviconURL(link);
-  newLink = link.substr(0, link.indexOf('/favicon.ico'));
+  if (link.includes('.')) {
+    if (link.indexOf('.') === link.lastIndexOf('.')) {
+      newLink = `www.${link}`;
+    }
+  }
+  if (!link.includes('https://') && !link.includes('http://')) {
+    newLink = `https://${newLink}`;
+  }
   return newLink;
 };
 
